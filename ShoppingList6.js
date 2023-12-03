@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const ShoppingList = () => {
+const ShoppingList6 = () => {
   const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState('');
 
@@ -13,7 +13,7 @@ const ShoppingList = () => {
 
   const loadItems = async () => {
     try {
-      const storedItems = await AsyncStorage.getItem('shoppingList');
+      const storedItems = await AsyncStorage.getItem('shoppingList6');
       if (storedItems !== null) {
         setItems(JSON.parse(storedItems));
       }
@@ -24,7 +24,7 @@ const ShoppingList = () => {
 
   const saveItems = async () => {
     try {
-      await AsyncStorage.setItem('shoppingList', JSON.stringify(items));
+      await AsyncStorage.setItem('shoppingList6', JSON.stringify(items));
     } catch (error) {
       console.error('Hiba az adatok mentésekor:', error);
     }
@@ -111,4 +111,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ShoppingList;
+export default ShoppingList6;

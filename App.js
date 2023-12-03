@@ -3,6 +3,11 @@ import { Button, View, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ShoppingList from './ShoppingList';
+import ShoppingList2 from './ShoppingList2';
+import ShoppingList3 from './ShoppingList3';
+import ShoppingList4 from './ShoppingList4';
+import ShoppingList5 from './ShoppingList5';
+import ShoppingList6 from './ShoppingList6';
 
 
 function HomeScreen({ navigation }) {
@@ -11,32 +16,32 @@ function HomeScreen({ navigation }) {
       <Text> </Text>
       <Button 
         title="Tesco"
-        onPress={() => navigation.navigate('Vissza')}
+        onPress={() => navigation.navigate('Vissza a Tesco-ból')}
       />
       <Text> </Text>
       <Button
         title="Penny"
-        onPress={() => navigation.navigate('Vissza2')}
+        onPress={() => navigation.navigate('Vissza a Penny-ből')}
       />
       <Text> </Text>
       <Button
         title="Lidl"
-        onPress={() => navigation.navigate('Vissza3')}
+        onPress={() => navigation.navigate('Vissza a Lidl-ből')}
       />
       <Text> </Text>
       <Button
         title="Kik"
-        onPress={() => navigation.navigate('Vissza4')}
+        onPress={() => navigation.navigate('Vissza a Kik-ből')}
       />
       <Text> </Text>
       <Button
         title="Euro Family"
-        onPress={() => navigation.navigate('Vissza5')}
+        onPress={() => navigation.navigate('Vissza az Euro Family-ból')}
       />
       <Text> </Text>
       <Button
         title="Interspar"
-        onPress={() => navigation.navigate('Vissza6')}
+        onPress={() => navigation.navigate('Vissza az Interspar-ból')}
       />
 
     </View>
@@ -67,7 +72,7 @@ function DetailsScreen2() {
       <Text> </Text>
       <Text>Penny</Text>
       <View>
-          <ShoppingList />
+          <ShoppingList2 />
         </View> 
     </View>
   );
@@ -80,7 +85,7 @@ function DetailsScreen3() {
       <Text> </Text>
       <Text>Lidl</Text>
       <View>
-          <ShoppingList />
+          <ShoppingList3 />
         </View>
     </View>
   );
@@ -93,7 +98,7 @@ function DetailsScreen4() {
       <Text> </Text>
       <Text>Kik</Text>
       <View>
-          <ShoppingList />
+          <ShoppingList4 />
         </View>
     </View>
   );
@@ -106,7 +111,7 @@ function DetailsScreen5() {
       <Text> </Text>
       <Text>Euro family</Text>
       <View>
-          <ShoppingList />
+          <ShoppingList5 />
         </View>
     </View>
   );
@@ -119,7 +124,7 @@ function DetailsScreen6() {
       <Text> </Text>
       <Text>Interspar</Text>
       <View>
-          <ShoppingList />
+          <ShoppingList6 />
         </View>
     </View>
   );
@@ -139,12 +144,12 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home" screenOptions={globalScreeOptions}>
         <Stack.Screen name="Bevásárlólisták" component={HomeScreen} />
-        <Stack.Screen name="Vissza" component={DetailsScreen} />
-        <Stack.Screen name="Vissza2" component={DetailsScreen2} />
-        <Stack.Screen name="Vissza3" component={DetailsScreen3} />
-        <Stack.Screen name="Vissza4" component={DetailsScreen4} />
-        <Stack.Screen name="Vissza5" component={DetailsScreen5} />
-        <Stack.Screen name="Vissza6" component={DetailsScreen6} />
+        <Stack.Screen name="Vissza a Tesco-ból" component={DetailsScreen} />
+        <Stack.Screen name="Vissza a Penny-ből" component={DetailsScreen2} />
+        <Stack.Screen name="Vissza a Lidl-ből" component={DetailsScreen3} />
+        <Stack.Screen name="Vissza a Kik-ből" component={DetailsScreen4} />
+        <Stack.Screen name="Vissza az Euro Family-ból" component={DetailsScreen5} />
+        <Stack.Screen name="Vissza az Interspar-ból" component={DetailsScreen6} />
       </Stack.Navigator>
     </NavigationContainer>
   );
