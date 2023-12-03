@@ -43,13 +43,9 @@ function HomeScreen({ navigation }) {
         title="Interspar"
         onPress={() => navigation.navigate('Vissza az Interspar-ból')}
       />
-
     </View>
   );
 }
-
-////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////
 
 function DetailsScreen() {
   return (
@@ -62,9 +58,7 @@ function DetailsScreen() {
         </View>
     </View>
   );
-  
 }
-
 
 function DetailsScreen2() {
   return (
@@ -76,7 +70,6 @@ function DetailsScreen2() {
         </View> 
     </View>
   );
-  
 }
 
 function DetailsScreen3() {
@@ -89,7 +82,6 @@ function DetailsScreen3() {
         </View>
     </View>
   );
-  
 }
 
 function DetailsScreen4() {
@@ -102,7 +94,6 @@ function DetailsScreen4() {
         </View>
     </View>
   );
-  
 }
 
 function DetailsScreen5() {
@@ -115,7 +106,6 @@ function DetailsScreen5() {
         </View>
     </View>
   );
-  
 }
 
 function DetailsScreen6() {
@@ -128,7 +118,6 @@ function DetailsScreen6() {
         </View>
     </View>
   );
-  
 }
 
 const Stack = createNativeStackNavigator();
