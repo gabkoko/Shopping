@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Button, View, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ShoppingList from './ShoppingList';
 
 
 function HomeScreen({ navigation }) {
@@ -50,23 +51,24 @@ function DetailsScreen() {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'top' }}>
       <Text> </Text>
     
-      <Text>Tesco Bevásárló lista</Text>
-
-      
-
+      <Text>Tesco</Text>
+        <View>
+          <ShoppingList />
+        </View>
     </View>
   );
   
 }
 
+
 function DetailsScreen2() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'top' }}>
       <Text> </Text>
-      <Text>Penny Bevásárló lista</Text>
-
-      
-
+      <Text>Penny</Text>
+      <View>
+          <ShoppingList />
+        </View> 
     </View>
   );
   
@@ -76,10 +78,10 @@ function DetailsScreen3() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'top' }}>
       <Text> </Text>
-      <Text>Lidl Bevásárló lista</Text>
-
-      
-
+      <Text>Lidl</Text>
+      <View>
+          <ShoppingList />
+        </View>
     </View>
   );
   
@@ -89,10 +91,10 @@ function DetailsScreen4() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'top' }}>
       <Text> </Text>
-      <Text>Kik Bevásárló lista</Text>
-
-      
-
+      <Text>Kik</Text>
+      <View>
+          <ShoppingList />
+        </View>
     </View>
   );
   
@@ -102,10 +104,10 @@ function DetailsScreen5() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'top' }}>
       <Text> </Text>
-      <Text>Euro family Bevásárló lista</Text>
-
-      
-
+      <Text>Euro family</Text>
+      <View>
+          <ShoppingList />
+        </View>
     </View>
   );
   
@@ -115,10 +117,10 @@ function DetailsScreen6() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'top' }}>
       <Text> </Text>
-      <Text>Interspar Bevásárló lista</Text>
-
-      
-
+      <Text>Interspar</Text>
+      <View>
+          <ShoppingList />
+        </View>
     </View>
   );
   
