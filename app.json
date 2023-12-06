@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "AwesomeProject",
-    "slug": "AwesomeProject",
+    "name": "ShoppingApp",
+    "slug": "ShoppingApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,22 +15,21 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.gabkoko.AwesomeProject"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.gabkoko.AwesomeProject"
+      "package": "com.gabkoko.ShoppingApp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "806028cf-dab4-4ed4-b1a3-a74ad4febb14"
+        "projectId": "fc14042e-1a13-485c-afdc-8220bedd96f3"
       }
     }
   }

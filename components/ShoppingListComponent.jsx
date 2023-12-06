@@ -1,10 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  FlatList,
+  StyleSheet,
+} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const ShoppingList2 = () => {
+const ShoppingListComponent = ({ shopAlias }) => {
   const [items, setItems] = useState([]);
-  const [newItem, setNewItem] = useState('');
+  const [newItem, setNewItem] = useState("");
 
   useEffect(() => {
     // Betöltjük az adatokat az AsyncStorage-ból, amikor a komponens mount-olódik
@@ -13,27 +20,27 @@ const ShoppingList2 = () => {
 
   const loadItems = async () => {
     try {
-      const storedItems = await AsyncStorage.getItem('shoppingList2');
+      const storedItems = await AsyncStorage.getItem(shopAlias);
       if (storedItems !== null) {
         setItems(JSON.parse(storedItems));
       }
     } catch (error) {
-      console.error('Hiba az adatok betöltésekor:', error);
+      console.error("Hiba az adatok betöltésekor:", error);
     }
   };
 
   const saveItems = async () => {
     try {
-      await AsyncStorage.setItem('shoppingList2', JSON.stringify(items));
+      await AsyncStorage.setItem(shopAlias, JSON.stringify(items));
     } catch (error) {
-      console.error('Hiba az adatok mentésekor:', error);
+      console.error("Hiba az adatok mentésekor:", error);
     }
   };
 
   const handleAddItem = () => {
-    if (newItem.trim() !== '') {
+    if (newItem.trim() !== "") {
       setItems([...items, newItem]);
-      setNewItem('');
+      setNewItem("");
     }
   };
 
@@ -51,7 +58,7 @@ const ShoppingList2 = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Bevásárlólista</Text>
-      
+
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -81,15 +88,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   header: {
     fontSize: 24,
     marginBottom: 16,
   },
   inputContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginBottom: 16,
   },
   input: {
@@ -99,16 +106,16 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   listContainer: {
-    width: '100%',
+    width: "100%",
   },
   listItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     borderWidth: 1,
     padding: 8,
     marginVertical: 4,
   },
 });
 
-export default ShoppingList2;
+export default ShoppingListComponent;
