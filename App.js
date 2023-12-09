@@ -24,10 +24,11 @@ function HomeScreen({ navigation }) {
         <View
           key={shopAlias}
           style={{
-            padding: 4,
-            backgroundColor: "teal",
+            alignContent: "space-around",
+            padding: 12,
+            backgroundColor: "white",
             borderRadius: 80,
-            width: "50%",
+            width: "70%",
           }}
         >
           <Button

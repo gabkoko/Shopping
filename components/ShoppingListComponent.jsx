@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const ShoppingListComponent = ({ shopAlias }) => {
   const [items, setItems] = useState([]);
@@ -98,10 +99,13 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
     marginBottom: 16,
+    width: "100%",
   },
   input: {
     flex: 1,
-    borderWidth: 1,
+    borderWidth: 3,
+    borderRadius: 80,
+    borderColor: "#2C6BED",
     marginRight: 8,
     padding: 8,
   },
@@ -113,8 +117,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     borderWidth: 1,
+    borderRadius: 80,
+    borderColor: "#2C6BED",
     padding: 8,
-    marginVertical: 4,
+    marginVertical: 1,
+    textDecorationColor: "#2C6BED",
+    width: "65%",
   },
 });
 

@@ -14,5 +14,4 @@ const DetailsScreenComponent = ({ route }) => {
     </View>
   );
 };
-
 export default DetailsScreenComponent;
