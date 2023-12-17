@@ -10,7 +10,11 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const ShoppingListComponent = ({ shopAlias }) => {
+type DetailsScreenComponentProps = {
+  shopAlias: string;
+};
+
+const ShoppingListComponent = ({ shopAlias }: DetailsScreenComponentProps) => {
   const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState("");
 

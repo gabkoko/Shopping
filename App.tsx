@@ -4,8 +4,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import DetailsScreenComponent from "./components/DetailsScreenComponent";
 
+type ShopType = { shopName: string; shopAlias: string };
+
+export type StackNavigatorType = {
+  shopDetails: ShopType;
+};
+
 function HomeScreen({ navigation }) {
-  const navigateToDetails = (shopAlias, shopName) => {
+  const navigateToDetails = ({ shopAlias, shopName }: ShopType) => {
     navigation.navigate("shopDetails", { shopAlias, shopName });
   };
 
@@ -43,7 +49,7 @@ function HomeScreen({ navigation }) {
         >
           <Button
             title={shopName}
-            onPress={() => navigateToDetails(shopAlias, shopName)}
+            onPress={() => navigateToDetails({ shopAlias, shopName })}
           />
         </View>
       ))}

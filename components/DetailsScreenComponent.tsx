@@ -3,8 +3,15 @@ import React from "react";
 import ShoppingListComponent from "./ShoppingListComponent";
 
 import tw from "tailwind-react-native-classnames";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { StackNavigatorType } from "../App";
 
-const DetailsScreenComponent = ({ route }) => {
+type DetailsScreenComponentProps = NativeStackScreenProps<
+  StackNavigatorType,
+  "shopDetails"
+>;
+
+const DetailsScreenComponent = ({ route }: DetailsScreenComponentProps) => {
   const { shopName, shopAlias } = route.params;
 
   return (
