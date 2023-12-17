@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import tw from "tailwind-react-native-classnames";
 import {
   View,
   Text,
@@ -8,7 +9,6 @@ import {
   StyleSheet,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const ShoppingListComponent = ({ shopAlias }) => {
   const [items, setItems] = useState([]);
@@ -58,7 +58,7 @@ const ShoppingListComponent = ({ shopAlias }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Bevásárlólista</Text>
+      <Text style={tw`text-white text-lg`}>Bevásárlólista</Text>
 
       <View style={styles.inputContainer}>
         <TextInput
@@ -91,10 +91,13 @@ const styles = StyleSheet.create({
     padding: 16,
     alignItems: "center",
     justifyContent: "center",
+    width: "100%",
+    backgroundColor: "#8ED1FC",
   },
   header: {
     fontSize: 24,
     marginBottom: 16,
+    width: "100%",
   },
   inputContainer: {
     flexDirection: "row",
@@ -104,10 +107,9 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     borderWidth: 3,
-    borderRadius: 80,
-    borderColor: "#2C6BED",
+    borderColor: "#2196f3",
     marginRight: 8,
-    padding: 8,
+    padding: 5,
   },
   listContainer: {
     width: "100%",
@@ -117,12 +119,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     borderWidth: 1,
-    borderRadius: 80,
-    borderColor: "#2C6BED",
-    padding: 8,
+    borderColor: "#2196f3",
+    padding: 4,
     marginVertical: 1,
     textDecorationColor: "#2C6BED",
     width: "65%",
+    Height: "100%",
   },
 });
 

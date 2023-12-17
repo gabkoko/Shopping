@@ -16,17 +16,27 @@ function HomeScreen({ navigation }) {
     { shopAlias: "kik", shopName: "Kik" },
     { shopAlias: "euroFamily", shopName: "Euro Family" },
     { shopAlias: "interspar", shopName: "Interspar" },
+    { shopAlias: "dm", shopName: "DM" },
+    { shopAlias: "kínai", shopName: "Kínai" },
+    { shopAlias: "rossmann", shopName: "Rossmann" },
   ];
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "top" }}>
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "top",
+        backgroundColor: "#8ED1FC",
+      }}
+    >
       {shopDefinitions.map(({ shopAlias, shopName }) => (
         <View
           key={shopAlias}
           style={{
             alignContent: "space-around",
             padding: 12,
-            backgroundColor: "white",
+            backgroundColor: "#8ED1FC",
             borderRadius: 80,
             width: "70%",
           }}
@@ -44,7 +54,7 @@ function HomeScreen({ navigation }) {
 const Stack = createNativeStackNavigator();
 
 const globalScreeOptions = {
-  headerStyle: { backgroundColor: "#2C6BED" },
+  headerStyle: { backgroundColor: "#2196f3" },
   headerTitleStyle: { color: "white" },
   headerTintColor: "white",
 };
