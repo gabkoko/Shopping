@@ -11,6 +11,11 @@ type DetailsScreenComponentProps = NativeStackScreenProps<
   "shopDetails"
 >;
 
+{
+  /* HF1: ts hiba eltüntetése */
+}
+//typescriptes basic react navigation tutorialból kicsekkolni
+//DetailsScreenComponent: Type????
 const DetailsScreenComponent = ({ route }: DetailsScreenComponentProps) => {
   const { shopName, shopAlias } = route.params;
 
@@ -19,7 +24,7 @@ const DetailsScreenComponent = ({ route }: DetailsScreenComponentProps) => {
       style={{
         flex: 1,
         alignItems: "center",
-        justifyContent: "top",
+        justifyContent: "flex-start",
         backgroundColor: "#8ED1FC",
       }}
     >

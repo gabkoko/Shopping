@@ -15,7 +15,7 @@ function HomeScreen({ navigation }) {
     navigation.navigate("shopDetails", { shopAlias, shopName });
   };
 
-  const shopDefinitions = [
+  const shopDefinitions: ShopType[] = [
     { shopAlias: "tesco", shopName: "Tesco" },
     { shopAlias: "penny", shopName: "Penny" },
     { shopAlias: "lidl", shopName: "Lidl" },
@@ -32,7 +32,7 @@ function HomeScreen({ navigation }) {
       style={{
         flex: 1,
         alignItems: "center",
-        justifyContent: "top",
+        justifyContent: "center",
         backgroundColor: "#8ED1FC",
       }}
     >
@@ -79,7 +79,7 @@ function App() {
         />
         <Stack.Screen
           name="shopDetails"
-          component={DetailsScreenComponent}
+          component={DetailsScreenComponent} //typescriptes basic react navigation tutorialból kicsekkolni
           options={{ title: "Vissza" }}
         />
       </Stack.Navigator>

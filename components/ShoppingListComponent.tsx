@@ -7,16 +7,19 @@ import {
   Button,
   FlatList,
   StyleSheet,
+  TouchableOpacity,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import ShoppingListItem from "./shoppinglist/ShoppingListItem";
 
 type DetailsScreenComponentProps = {
   shopAlias: string;
 };
 
 const ShoppingListComponent = ({ shopAlias }: DetailsScreenComponentProps) => {
-  const [items, setItems] = useState([]);
-  const [newItem, setNewItem] = useState("");
+  const [items, setItems] = useState<string[]>([]);
+  const [newItem, setNewItem] = useState<string>("");
 
   useEffect(() => {
     // Betöltjük az adatokat az AsyncStorage-ból, amikor a komponens mount-olódik
@@ -49,7 +52,7 @@ const ShoppingListComponent = ({ shopAlias }: DetailsScreenComponentProps) => {
     }
   };
 
-  const handleRemoveItem = (index) => {
+  const handleRemoveItem = (index: number) => {
     const updatedItems = [...items];
     updatedItems.splice(index, 1);
     setItems(updatedItems);
@@ -71,20 +74,34 @@ const ShoppingListComponent = ({ shopAlias }: DetailsScreenComponentProps) => {
           value={newItem}
           onChangeText={(text) => setNewItem(text)}
         />
+        {/* HF2: mennyiséget is meg lehessen adni elemekhez, és  adott típusúból többet ne lehessen felvenni */}
+        {/* HF3: adott sort lehessen módosítani */}
+        {/* HFX: törlés mindent, megerősítés popup vagy valami kelljen hozzá */}
+        {/* HFX + 1: adott sort lehessen módosítani lakat iconnal lezárod egy itemet */}
+        {/* <TextInput
+          style={styles.input}
+          placeholder="Mennyiség"
+          value={newItem}
+          onChangeText={(text) => setNewItem(text)}
+        /> */}
         <Button title="Hozzáad" onPress={handleAddItem} />
       </View>
 
-      <FlatList
-        style={styles.listContainer}
-        data={items}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
-          <View style={styles.listItem}>
-            <Text>{item}</Text>
-            <Button title="Töröl" onPress={() => handleRemoveItem(index)} />
-          </View>
-        )}
-      />
+      <View style={{ flexDirection: "row", flex: 1 }}>
+        <FlatList
+          style={styles.listContainer}
+          data={items}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item, index }) => (
+            <ShoppingListItem
+              itemName={item}
+              onDelete={() => {
+                handleRemoveItem(index);
+              }}
+            />
+          )}
+        />
+      </View>
     </View>
   );
 };
@@ -115,19 +132,16 @@ const styles = StyleSheet.create({
     marginRight: 8,
     padding: 5,
   },
-  listContainer: {
-    width: "100%",
-  },
+  listContainer: { marginTop: 12, marginBottom: 36 },
   listItem: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
     borderWidth: 1,
     borderColor: "#2196f3",
     padding: 4,
-    marginVertical: 1,
+    marginVertical: 8,
     textDecorationColor: "#2C6BED",
-    width: "65%",
+    width: "100%",
     Height: "100%",
   },
 });
