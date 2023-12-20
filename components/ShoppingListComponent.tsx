@@ -17,9 +17,15 @@ type DetailsScreenComponentProps = {
   shopAlias: string;
 };
 
+interface Item {
+  name: string;
+  quantity: string;
+}
+
 const ShoppingListComponent = ({ shopAlias }: DetailsScreenComponentProps) => {
-  const [items, setItems] = useState<string[]>([]);
+  const [items, setItems] = useState<Item[]>([]);
   const [newItem, setNewItem] = useState<string>("");
+  const [newQuantity, setNewQuantity] = useState<string>("");
 
   useEffect(() => {
     // Betöltjük az adatokat az AsyncStorage-ból, amikor a komponens mount-olódik
@@ -47,8 +53,13 @@ const ShoppingListComponent = ({ shopAlias }: DetailsScreenComponentProps) => {
 
   const handleAddItem = () => {
     if (newItem.trim() !== "") {
-      setItems([...items, newItem]);
+      const newItemObject: Item = {
+        name: newItem,
+        quantity: newQuantity,
+      };
+      setItems([...items, newItemObject]);
       setNewItem("");
+      setNewQuantity("");
     }
   };
 
@@ -74,16 +85,12 @@ const ShoppingListComponent = ({ shopAlias }: DetailsScreenComponentProps) => {
           value={newItem}
           onChangeText={(text) => setNewItem(text)}
         />
-        {/* HF2: mennyiséget is meg lehessen adni elemekhez, és  adott típusúból többet ne lehessen felvenni */}
-        {/* HF3: adott sort lehessen módosítani */}
-        {/* HFX: törlés mindent, megerősítés popup vagy valami kelljen hozzá */}
-        {/* HFX + 1: adott sort lehessen módosítani lakat iconnal lezárod egy itemet */}
-        {/* <TextInput
+        <TextInput
           style={styles.input}
           placeholder="Mennyiség"
-          value={newItem}
-          onChangeText={(text) => setNewItem(text)}
-        /> */}
+          value={newQuantity}
+          onChangeText={(text) => setNewQuantity(text)}
+        />
         <Button title="Hozzáad" onPress={handleAddItem} />
       </View>
 
@@ -94,7 +101,8 @@ const ShoppingListComponent = ({ shopAlias }: DetailsScreenComponentProps) => {
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
             <ShoppingListItem
-              itemName={item}
+              itemName={item.name}
+              itemQuantity={item.quantity}
               onDelete={() => {
                 handleRemoveItem(index);
               }}

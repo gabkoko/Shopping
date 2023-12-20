@@ -4,12 +4,14 @@ import { FontAwesome } from "@expo/vector-icons";
 
 type ShoppingListItemProps = {
   itemName: string;
+  itemQuantity: "string";
   onDelete: () => void;
   itemDetails?: string;
 };
 
 const ShoppingListItem = ({
   itemName,
+  itemQuantity,
   itemDetails,
   onDelete,
 }: ShoppingListItemProps) => {
@@ -22,7 +24,7 @@ const ShoppingListItem = ({
   return (
     <View style={styles.listItem}>
       <View style={{ flex: 1 }}>
-        <Text>{itemName}</Text>
+        <Text>{`${itemName} - ${itemQuantity}`}</Text>
       </View>
 
       <TouchableOpacity
