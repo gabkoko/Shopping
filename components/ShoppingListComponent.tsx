@@ -8,6 +8,7 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
+  Modal,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -68,12 +69,26 @@ const ShoppingListComponent = ({ shopAlias }: DetailsScreenComponentProps) => {
     updatedItems.splice(index, 1);
     setItems(updatedItems);
   };
+  const [confirmationModalVisible, setConfirmationModalVisible] =
+    useState(false);
+  const toggleConfirmationModal = () => {
+    setConfirmationModalVisible(!confirmationModalVisible);
+  };
 
   useEffect(() => {
     // Mentjük az adatokat az AsyncStorage-be, amikor a 'items' változik
     saveItems();
   }, [items]);
 
+  const handleRemoveAllItems = () => {
+    toggleConfirmationModal(); // Megnyitjuk a modal-t a megerősítési ablakhoz
+  };
+  const confirmRemoveAllItems = () => {
+    // Töröljük az összes elemet
+    setItems([]);
+    // Bezárjuk a modal-t, miután a felhasználó megerősítette a törlést
+    toggleConfirmationModal();
+  };
   return (
     <View style={styles.container}>
       <Text style={tw`text-white text-lg`}>Bevásárlólista</Text>
@@ -85,6 +100,10 @@ const ShoppingListComponent = ({ shopAlias }: DetailsScreenComponentProps) => {
           value={newItem}
           onChangeText={(text) => setNewItem(text)}
         />
+        {/* HF2: mennyiséget is meg lehessen adni elemekhez, és  adott típusúból többet ne lehessen felvenni */}
+        {/* HFX: törlés mindent, megerősítés popup vagy valami kelljen hozzá */}
+        {/* HFX + 1: lakat iconnal lezárod egy itemet */}
+        {/* HFX + 2: adott sort lehessen módosítani */}
         <TextInput
           style={styles.input}
           placeholder="Mennyiség"
@@ -94,6 +113,28 @@ const ShoppingListComponent = ({ shopAlias }: DetailsScreenComponentProps) => {
         <Button title="Hozzáad" onPress={handleAddItem} />
       </View>
 
+      <View style={{ flexDirection: "row" }}>
+        <Button title="Teljes lista törlése" onPress={handleRemoveAllItems} />
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={confirmationModalVisible}
+          onRequestClose={() => {
+            toggleConfirmationModal(); // Bezárom a modal-t, ha a felhasználó elutasítja a megerősítést
+          }}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text>Biztosan törölni szeretnéd az összes elemet?</Text>
+              <Button
+                title="Igen"
+                onPress={confirmRemoveAllItems} // Bezárjuk a modal-t, miután a felhasználó megerősítette a törlést
+              />
+              <Button title="Mégsem" onPress={toggleConfirmationModal} />
+            </View>
+          </View>
+        </Modal>
+      </View>
       <View style={{ flexDirection: "row", flex: 1 }}>
         <FlatList
           style={styles.listContainer}
@@ -151,6 +192,17 @@ const styles = StyleSheet.create({
     textDecorationColor: "#2C6BED",
     width: "100%",
     Height: "100%",
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 16,
+    borderRadius: 8,
   },
 });
 
