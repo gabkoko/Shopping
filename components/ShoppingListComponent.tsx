@@ -7,11 +7,9 @@ import {
   Button,
   FlatList,
   StyleSheet,
-  TouchableOpacity,
   Modal,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ShoppingListItem from "./shoppinglist/ShoppingListItem";
 
 type DetailsScreenComponentProps = {
@@ -21,12 +19,14 @@ type DetailsScreenComponentProps = {
 interface Item {
   name: string;
   quantity: string;
+  locked: boolean;
 }
 
 const ShoppingListComponent = ({ shopAlias }: DetailsScreenComponentProps) => {
   const [items, setItems] = useState<Item[]>([]);
   const [newItem, setNewItem] = useState<string>("");
   const [newQuantity, setNewQuantity] = useState<string>("");
+  const [editingItemIndex, setEditingItemIndex] = useState<number | null>(null);
 
   useEffect(() => {
     // Betöltjük az adatokat az AsyncStorage-ból, amikor a komponens mount-olódik
@@ -37,7 +37,13 @@ const ShoppingListComponent = ({ shopAlias }: DetailsScreenComponentProps) => {
     try {
       const storedItems = await AsyncStorage.getItem(shopAlias);
       if (storedItems !== null) {
-        setItems(JSON.parse(storedItems));
+        const parsedItems: Item[] = JSON.parse(storedItems).map(
+          (item: any) => ({
+            ...item,
+            locked: false, // Alapértelmezett értékként beállítjuk false-ra
+          })
+        );
+        setItems(parsedItems);
       }
     } catch (error) {
       console.error("Hiba az adatok betöltésekor:", error);
@@ -53,21 +59,64 @@ const ShoppingListComponent = ({ shopAlias }: DetailsScreenComponentProps) => {
   };
 
   const handleAddItem = () => {
-    if (newItem.trim() !== "") {
-      const newItemObject: Item = {
-        name: newItem,
-        quantity: newQuantity,
-      };
-      setItems([...items, newItemObject]);
+    const isDuplicate = items.some((item, index) => {
+      // Ne ellenőrizzük az aktuális szerkesztés alatt lévő elemet
+      if (index === editingItemIndex) {
+        return false;
+      }
+      return item.name === newItem;
+    });
+    if (newItem.trim() !== "" && !isDuplicate) {
+      if (editingItemIndex !== null) {
+        // Ha az editingItemIndex nem null, akkor a felhasználó egy meglévő elemet szerkeszt
+        const updatedItems = [...items];
+        updatedItems[editingItemIndex] = {
+          name: newItem,
+          quantity: newQuantity,
+          locked: false,
+        };
+        setItems(updatedItems);
+        setEditingItemIndex(null);
+      } else {
+        // Ellenkező esetben hozzáadjuk az új elemet
+        const newItemObject: Item = {
+          name: newItem,
+          quantity: newQuantity,
+          locked: false,
+        };
+        setItems([...items, newItemObject]);
+      }
+
       setNewItem("");
       setNewQuantity("");
+    } else if (isDuplicate) {
+      // Ha az elem már szerepel a listán, jelezzük a felhasználónak
+      alert("Ez az elem már szerepel a listán!");
     }
   };
+  const handleEditItem = (index: number) => {
+    // Az editingItemIndex beállítása az aktuálisan szerkesztett elem indexére
+    setEditingItemIndex(index);
 
+    // Az aktuálisan szerkesztett elem adatainak megjelenítése az input mezőkben
+    const editingItem = items[index];
+    setNewItem(editingItem.name);
+    setNewQuantity(editingItem.quantity);
+  };
   const handleRemoveItem = (index: number) => {
-    const updatedItems = [...items];
-    updatedItems.splice(index, 1);
-    setItems(updatedItems);
+    const currentItem = items[index];
+    if (!currentItem.locked) {
+      const updatedItems = [...items];
+      updatedItems.splice(index, 1);
+      setItems(updatedItems);
+
+      // Ha a törölt elem az volt, amit szerkesztettek, akkor az editingItemIndex null-ra állítása
+      if (editingItemIndex === index) {
+        setEditingItemIndex(null);
+      }
+    } else {
+      console.log("A lezárt elemet nem lehet törölni.");
+    }
   };
   const [confirmationModalVisible, setConfirmationModalVisible] =
     useState(false);
@@ -125,11 +174,15 @@ const ShoppingListComponent = ({ shopAlias }: DetailsScreenComponentProps) => {
         >
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
-              <Text>Biztosan törölni szeretnéd az összes elemet?</Text>
+              <Text style={tw`font-bold text-red-600`}>
+                Biztosan törölni szeretnéd az összes elemet?
+              </Text>
+              <Text> </Text>
               <Button
                 title="Igen"
                 onPress={confirmRemoveAllItems} // Bezárjuk a modal-t, miután a felhasználó megerősítette a törlést
               />
+              <Text> </Text>
               <Button title="Mégsem" onPress={toggleConfirmationModal} />
             </View>
           </View>
@@ -144,8 +197,12 @@ const ShoppingListComponent = ({ shopAlias }: DetailsScreenComponentProps) => {
             <ShoppingListItem
               itemName={item.name}
               itemQuantity={item.quantity}
+              locked={item.locked} // Hozzáadva a locked prop
               onDelete={() => {
                 handleRemoveItem(index);
+              }}
+              onEdit={() => {
+                handleEditItem(index);
               }}
             />
           )}
@@ -200,7 +257,8 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
-    backgroundColor: "white",
+    backgroundColor: "lightblue",
+    fontStyle: "red",
     padding: 16,
     borderRadius: 8,
   },
