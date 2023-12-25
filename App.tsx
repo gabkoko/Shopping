@@ -28,7 +28,7 @@ function HomeScreen({
         { shopAlias: "euroFamily", shopName: "Euro Family" },
         { shopAlias: "interspar", shopName: "Interspar" },
         { shopAlias: "dm", shopName: "DM" },
-        { shopAlias: "kínai", shopName: "Kínai" },
+        { shopAlias: "kinai", shopName: "Kínai" },
         { shopAlias: "rossmann", shopName: "Rossmann" },
     ];
 
