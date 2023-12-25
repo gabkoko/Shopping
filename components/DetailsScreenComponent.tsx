@@ -4,36 +4,32 @@ import ShoppingListComponent from "./ShoppingListComponent";
 
 import tw from "tailwind-react-native-classnames";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { StackNavigatorType } from "../App";
+import { ShopType } from "../App";
+import { ParamListBase } from "@react-navigation/native";
 
 type DetailsScreenComponentProps = NativeStackScreenProps<
-  StackNavigatorType,
-  "shopDetails"
+    ParamListBase,
+    "shopDetails"
 >;
 
-{
-  /* HF1: ts hiba eltüntetése */
-}
-//typescriptes basic react navigation tutorialból kicsekkolni
-//DetailsScreenComponent: Type????
 const DetailsScreenComponent = ({ route }: DetailsScreenComponentProps) => {
-  const { shopName, shopAlias } = route.params;
+    const { shopName, shopAlias } = route.params as ShopType;
 
-  return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "flex-start",
-        backgroundColor: "#8ED1FC",
-      }}
-    >
-      <Text style={tw`text-white text-xl`}>{shopName}</Text>
-      <View>
-        <ShoppingListComponent shopAlias={shopAlias} />
-      </View>
-    </View>
-  );
+    return (
+        <View
+            style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "flex-start",
+                backgroundColor: "#8ED1FC",
+            }}
+        >
+            <Text style={tw`text-white text-xl`}>{shopName}</Text>
+            <View>
+                <ShoppingListComponent shopAlias={shopAlias} />
+            </View>
+        </View>
+    );
 };
 
 export default DetailsScreenComponent;
