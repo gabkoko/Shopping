@@ -1,16 +1,21 @@
 import * as React from "react";
 import { Button, View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer, ParamListBase } from "@react-navigation/native";
+import {
+  NativeStackScreenProps,
+  createNativeStackNavigator,
+} from "@react-navigation/native-stack";
 import DetailsScreenComponent from "./components/DetailsScreenComponent";
 
-type ShopType = { shopName: string; shopAlias: string };
+export type ShopType = { shopName: string; shopAlias: string };
 
 export type StackNavigatorType = {
   shopDetails: ShopType;
 };
 
-function HomeScreen({ navigation }) {
+function HomeScreen({
+  navigation,
+}: NativeStackScreenProps<ParamListBase, "home">) {
   const navigateToDetails = ({ shopAlias, shopName }: ShopType) => {
     navigation.navigate("shopDetails", { shopAlias, shopName });
   };
@@ -23,7 +28,7 @@ function HomeScreen({ navigation }) {
     { shopAlias: "euroFamily", shopName: "Euro Family" },
     { shopAlias: "interspar", shopName: "Interspar" },
     { shopAlias: "dm", shopName: "DM" },
-    { shopAlias: "kínai", shopName: "Kínai" },
+    { shopAlias: "kinai", shopName: "Kínai" },
     { shopAlias: "rossmann", shopName: "Rossmann" },
   ];
 
@@ -79,7 +84,7 @@ function App() {
         />
         <Stack.Screen
           name="shopDetails"
-          component={DetailsScreenComponent} //typescriptes basic react navigation tutorialból kicsekkolni
+          component={DetailsScreenComponent}
           options={{ title: "Vissza" }}
         />
       </Stack.Navigator>

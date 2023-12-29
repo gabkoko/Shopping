@@ -10,17 +10,11 @@ import {
   Modal,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import ShoppingListItem from "./shoppinglist/ShoppingListItem";
+import ShoppingListItem, { Item } from "./shoppinglist/ShoppingListItem";
 
 type DetailsScreenComponentProps = {
   shopAlias: string;
 };
-
-interface Item {
-  name: string;
-  quantity: string;
-  locked: boolean;
-}
 
 const ShoppingListComponent = ({ shopAlias }: DetailsScreenComponentProps) => {
   const [items, setItems] = useState<Item[]>([]);
@@ -36,15 +30,13 @@ const ShoppingListComponent = ({ shopAlias }: DetailsScreenComponentProps) => {
   const loadItems = async () => {
     try {
       const storedItems = await AsyncStorage.getItem(shopAlias);
-      if (storedItems !== null) {
-        const parsedItems: Item[] = JSON.parse(storedItems).map(
-          (item: any) => ({
-            ...item,
-            locked: false, // Alapértelmezett értékként beállítjuk false-ra
-          })
-        );
-        setItems(parsedItems);
+      if (!storedItems) {
+        return;
       }
+
+      const parsedItems: Item[] = JSON.parse(storedItems);
+
+      setItems(parsedItems);
     } catch (error) {
       console.error("Hiba az adatok betöltésekor:", error);
     }
@@ -130,14 +122,26 @@ const ShoppingListComponent = ({ shopAlias }: DetailsScreenComponentProps) => {
   }, [items]);
 
   const handleRemoveAllItems = () => {
+    const itemsToRemove = items.filter((item) => !item.locked);
+    if (itemsToRemove.length === 0) {
+      alert("Nincs nyitott elem a törléshez.");
+      return;
+    }
+
     toggleConfirmationModal(); // Megnyitjuk a modal-t a megerősítési ablakhoz
   };
+
   const confirmRemoveAllItems = () => {
-    // Töröljük az összes elemet
-    setItems([]);
+    // Töröljük csak azokat az elemeket, amelyek nincsenek lezáva
+    const updatedItems = items.filter((item) => item.locked);
+    console.log(updatedItems);
+
+    setItems(updatedItems);
+
     // Bezárjuk a modal-t, miután a felhasználó megerősítette a törlést
     toggleConfirmationModal();
   };
+
   return (
     <View style={styles.container}>
       <Text style={tw`text-white text-lg`}>Bevásárlólista</Text>
@@ -195,14 +199,20 @@ const ShoppingListComponent = ({ shopAlias }: DetailsScreenComponentProps) => {
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
             <ShoppingListItem
-              itemName={item.name}
-              itemQuantity={item.quantity}
-              locked={item.locked} // Hozzáadva a locked prop
+              item={item}
               onDelete={() => {
                 handleRemoveItem(index);
               }}
               onEdit={() => {
                 handleEditItem(index);
+              }}
+              onLock={(lockedItem) => {
+                items.forEach((i) => {
+                  if (i.name === lockedItem.name) {
+                    i.locked = !i.locked;
+                  }
+                });
+                setItems([...items]);
               }}
             />
           )}
